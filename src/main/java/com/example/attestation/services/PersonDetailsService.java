@@ -26,7 +26,7 @@ public class PersonDetailsService implements UserDetailsService {
         //Получаем пользователя из таблицы по логину с формы аутентификации
         Optional<Person> person = personRepository.findByLogin(username);
 
-        //Если пользователь по огину не найден
+        //Если пользователь по логину не найден
         if (person.isEmpty()){
             //Выбрасываем исключение, что данный пользователь не найден
             //Это исключение поймает Спринг Секьюрити, и сообщение будет выведено на странице

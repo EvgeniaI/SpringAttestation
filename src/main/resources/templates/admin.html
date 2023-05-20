@@ -7,9 +7,12 @@
 <body>
 <h1>Кабинет администратора</h1>
 <form method="post" action="/logout">
+    <input type = "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <button type="submit">Выйти</button>
 </form>
 <a href="admin/product/add">Добавить товар</a>
+<hr>
+<a href="/infoOrders">Заказы пользователей</a>
 <hr>
 <div th:each="product : ${products}">
     <p th:text="'Наименование: ' + ${product.getTitle()}"></p>

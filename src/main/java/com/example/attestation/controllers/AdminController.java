@@ -1,9 +1,13 @@
 package com.example.attestation.controllers;
 
+import com.example.attestation.enumm.Status;
 import com.example.attestation.models.Category;
 import com.example.attestation.models.Image;
+import com.example.attestation.models.Order;
 import com.example.attestation.models.Product;
 import com.example.attestation.repositories.CategoryRepository;
+import com.example.attestation.repositories.OrderRepository;
+import com.example.attestation.services.OrderService;
 import com.example.attestation.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +24,7 @@ import java.util.UUID;
 @Controller
 public class AdminController {
 
+    private final OrderService orderService;
     private final ProductService productService;
 
     @Value("${upload.path}")
@@ -27,7 +32,8 @@ public class AdminController {
 
     private final CategoryRepository categoryRepository;
 
-    public AdminController(ProductService productService, CategoryRepository categoryRepository) {
+    public AdminController(OrderService orderService, OrderRepository orderRepository, ProductService productService, CategoryRepository categoryRepository) {
+        this.orderService = orderService;
         this.productService = productService;
         this.categoryRepository = categoryRepository;
     }
@@ -145,4 +151,5 @@ public class AdminController {
         productService.updateProduct(id, product);
         return "redirect:/admin";
     }
+
 }

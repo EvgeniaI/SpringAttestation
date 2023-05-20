@@ -210,7 +210,7 @@ public class MainController {
 
         String uuid = UUID.randomUUID().toString();
         for (Product product : productList){
-            Order newOrder = new Order(uuid, product, personDetails.getPerson(), 1, product.getPrice(), Status.Получен);
+            Order newOrder = new Order(uuid, product, personDetails.getPerson(), 1, product.getPrice(), Status.Оформлен);
             orderRepository.save(newOrder);
             cartRepository.deleteCartByProductId(product.getId());
         }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Заказы пользователей</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/infoOrders/search}">
+  <fieldset>
+    <legend>Поиск</legend>
+    <label for="search">Поиск по номеру заказа:</label>
+    <input type="text" id="search" name="search" placeholder="Введите последние 4 буквы/цифры номера заказа" th:value="*{value_search}">
+    <br>
+    <input type="submit" value="Найти">
+  </fieldset>
+</form>
+<hr>
+<h3>Результат поиска:</h3>
+<div th:each="order : ${search_order}">
+  <h2 th:text="'Заказ № ' + ${order.getNumber()}"></h2>
+  <p th:text="'Заказчик: ' + ${order.getPerson().getLogin()}"></p>
+  <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+  <p th:text="'Статус: ' + ${order.getStatus()}"></p>
+</div>
+<hr>
+<h3>Заказы пользователей:</h3>
+<div th:each="order : ${orders}">
+  <h3 th:text="'Заказ № ' + ${order.getNumber()}"></h3>
+  <p th:text="'Заказчик: ' + ${order.getPerson().getLogin()}"></p>
+  <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+  <p th:text="'Статус: ' + ${order.getStatus()}"></p>
+  <a th:href="@{/editOrder/{id}(id=${order.getId()})}">Изменить статус заказа</a>
+  <hr>
+</div>
+</body>
+</html>

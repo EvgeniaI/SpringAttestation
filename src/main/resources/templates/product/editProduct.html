@@ -41,6 +41,14 @@
   <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
   <br>
   <br>
+  <p style="color: red">Загрузите, как минимум, 1 фотографию, она будет являться главной фотографией товара. Общее количество фотографий не может превышать 5 шт.</p>
+  <input type="file" name="file_one">
+  <input type="file" name="file_two">
+  <input type="file" name="file_three">
+  <input type="file" name="file_four">
+  <input type="file" name="file_five">
+  <br>
+  <br>
   <input type="submit" value="Редактировать">
 </form>
 </body>
