@@ -14,6 +14,8 @@
 <hr>
 <a href="/infoOrders">Заказы пользователей</a>
 <hr>
+<a href="/infoPerson">Информация о пользователях</a>
+<hr>
 <div th:each="product : ${products}">
     <p th:text="'Наименование: ' + ${product.getTitle()}"></p>
     <p th:text="'Цена: ' + ${product.getPrice()}"></p>

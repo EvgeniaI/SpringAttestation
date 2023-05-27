@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>info of user</h3>
+<div th:each="per : ${person}">
+    <p th:text="'ID пользователя: ' + ${per.getId()}"></p>
+    <p th:text="'Логин пользователя: ' + ${per.getLogin()}"></p>
+    <p th:text="'Пароль пользователя: ' + ${per.getPassword()}"></p>
+    <p th:text="'Роль пользователя: ' + ${per.getRole()}"></p>
+    <a th:href="@{/editPerson/{id}(id=${per.getId()})}">Изменить роль пользователю</a>
+    <hr>
+</div>
+</body>
+</html>

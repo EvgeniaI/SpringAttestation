@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EditPerson</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/editPerson/{id}(id=${person.getId()})}" th:object="${person}"  enctype="multipart/form-data">
+
+<div th:each="per : ${person}">
+    <h3>info of user</h3>
+    <p th:text="'ID пользователя: ' + ${per.getId()}"></p>
+    <p th:text="'Логин пользователя: ' + ${per.getLogin()}"></p>
+    <p th:text="'Пароль пользователя: ' + ${per.getPassword()}"></p>
+    <select name="role" id="role"><h3>izmenit role</h3>
+    <option th:value="${person.getRole()}" th:field="*{role}">ROLE_USER</option>
+        <option th:value="${person.getRole()}" th:field="*{role}">ROLE_ADMIN</option>
+    </select>
+    <br>
+    <input type="submit" value="Редактировать">
+    <hr>
+</div>
+</form>
+</body>
+</html>

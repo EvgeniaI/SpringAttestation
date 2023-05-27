@@ -1,13 +1,12 @@
 package com.example.attestation.controllers;
 
 import com.example.attestation.enumm.Status;
-import com.example.attestation.models.Category;
-import com.example.attestation.models.Image;
-import com.example.attestation.models.Order;
-import com.example.attestation.models.Product;
+import com.example.attestation.models.*;
 import com.example.attestation.repositories.CategoryRepository;
 import com.example.attestation.repositories.OrderRepository;
+import com.example.attestation.repositories.PersonRepository;
 import com.example.attestation.services.OrderService;
+import com.example.attestation.services.PersonService;
 import com.example.attestation.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,14 +26,19 @@ public class AdminController {
     private final OrderService orderService;
     private final ProductService productService;
 
+    private final PersonService personService;
+    private final PersonRepository personRepository;
+
     @Value("${upload.path}")
     private String uploadPath;
 
     private final CategoryRepository categoryRepository;
 
-    public AdminController(OrderService orderService, OrderRepository orderRepository, ProductService productService, CategoryRepository categoryRepository) {
+    public AdminController(OrderService orderService, OrderRepository orderRepository, ProductService productService, PersonService personService, PersonRepository personRepository, CategoryRepository categoryRepository) {
         this.orderService = orderService;
         this.productService = productService;
+        this.personRepository = personRepository;
+        this.personService = personService;
         this.categoryRepository = categoryRepository;
     }
 
@@ -60,7 +64,7 @@ public class AdminController {
             model.addAttribute("category", categoryRepository.findAll());
             return "product/addProduct";
         }
-        if (file_one != null){
+        if (!file_one.isEmpty()){
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()){
                 uploadDir.mkdir();
@@ -73,7 +77,7 @@ public class AdminController {
             image.setFileName(resultFileName);
             product.addImageToProduct(image);
         }
-        if (file_two != null){
+        if (!file_two.isEmpty()){
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()){
                 uploadDir.mkdir();
@@ -86,7 +90,7 @@ public class AdminController {
             image.setFileName(resultFileName);
             product.addImageToProduct(image);
         }
-        if (file_three != null){
+        if (!file_three.isEmpty()){
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()){
                 uploadDir.mkdir();
@@ -99,7 +103,7 @@ public class AdminController {
             image.setFileName(resultFileName);
             product.addImageToProduct(image);
         }
-        if (file_four != null){
+        if (!file_four.isEmpty()){
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()){
                 uploadDir.mkdir();
@@ -112,7 +116,7 @@ public class AdminController {
             image.setFileName(resultFileName);
             product.addImageToProduct(image);
         }
-        if (file_five != null){
+        if (!file_five.isEmpty()){
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()){
                 uploadDir.mkdir();
@@ -149,6 +153,31 @@ public class AdminController {
             return "product/editProduct";
         }
         productService.updateProduct(id, product);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/infoPerson")
+    public String getAllPerson (Model model){
+        model.addAttribute("person", personService.getAllPerson());
+        return "/infoPerson";
+    }
+
+    @GetMapping("/editPerson/{id}")
+    public String editPerson (@PathVariable("id") int id,Model model){
+        model.addAttribute("person", personService.getPersonId(id));
+        return "/editPerson";
+    }
+
+    @PostMapping("/editPerson/{id}")
+    public String updateOrder(@ModelAttribute("person") Person person, BindingResult bindingResult, @PathVariable("id") int id, Model model, @RequestParam("role") String role){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("person", personService.getPersonId(id));
+            return "/editPerson";
+        }
+        model.addAttribute("person", personService.getPersonId(id));
+        Person personEdit = personRepository.findById(id).orElseThrow();
+        personEdit.setRole(role);
+        personService.updatePerson(id, personEdit);
         return "redirect:/admin";
     }
 
