@@ -13,8 +13,8 @@
     <p th:text="'Логин пользователя: ' + ${per.getLogin()}"></p>
     <p th:text="'Пароль пользователя: ' + ${per.getPassword()}"></p>
     <select name="role" id="role"><h3>izmenit role</h3>
-    <option th:value="${person.getRole()}" th:field="*{role}">ROLE_USER</option>
-        <option th:value="${person.getRole()}" th:field="*{role}">ROLE_ADMIN</option>
+    <option th:value="${'ROLE_USER'}" th:field="*{role}">ROLE_USER</option>
+        <option th:value="${'ROLE_ADMIN'}" th:field="*{role}">ROLE_ADMIN</option>
     </select>
     <br>
     <input type="submit" value="Редактировать">
