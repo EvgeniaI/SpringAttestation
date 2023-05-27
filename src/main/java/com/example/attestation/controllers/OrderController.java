@@ -56,6 +56,10 @@ public class OrderController {
         return "redirect:/admin";
     }
 
-
+    @GetMapping("/editOrder/delete/{id}")
+    public String deleteOrder(@PathVariable("id") int id){
+        orderService.deleteOrder(id);
+        return "redirect:/infoOrders";
+    }
 
 }

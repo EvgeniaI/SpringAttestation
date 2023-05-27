@@ -35,5 +35,9 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    @Transactional
+    public void deleteOrder(int id){
+        orderRepository.deleteById(id);
+    }
 
 }
